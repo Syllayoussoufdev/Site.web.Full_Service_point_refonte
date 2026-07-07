@@ -1,50 +1,36 @@
 services:
   app:
     build: .
-    container_name: fsp_app
     ports:
       - "8080:80"
+      - "5173:5173"
     volumes:
       - .:/var/www/html
-    depends_on:
-      - db
     networks:
-      - fsp-net
+      - laravel-network
+    # Exécuter en tant qu'utilisateur courant pour éviter les problèmes de droits
+    user: "1000:1000" 
 
-  db:
+  mysql:
     image: mysql:8.0
-    container_name: fsp_db
     environment:
+      MYSQL_DATABASE: fsp_db
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fullservicepoint
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
-    volumes:
-      - fsp-db:/var/lib/mysql
     networks:
-      - fsp-net
+      - laravel-network
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: fsp_phpmyadmin
+    image: phpmyadmin
+    container_name: fullservicepoint-phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 300M
     ports:
       - "8081:80"
-    environment:
-      PMA_HOST: db
     networks:
-      - fsp-net
-
-  node:
-    image: node:20-alpine
-    container_name: fsp_node
-    working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
-    tty: true
-    networks:
-      - fsp-net
+      - laravel-network      
 
 networks:
-  fsp-net:
-volumes:
-  fsp-db:
+  laravel-network:
+    driver: bridge
