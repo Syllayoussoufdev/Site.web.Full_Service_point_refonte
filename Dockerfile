@@ -30,3 +30,11 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN mkdir -p /var/www/html/.npm /var/www/html/.composer \
     && chown -R 1000:1000 /var/www/html/.npm /var/www/html/.composer \
     && chmod -R 777 /var/www/html/.npm /var/www/html/.composer
+    
+    # Récupérer l'UID/GID de l'hôte (1000:1000)
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data \
+    && mkdir -p /home/www-data/.config /home/www-data/.npm \
+    && chown -R www-data:www-data /home/www-data /var/www/html

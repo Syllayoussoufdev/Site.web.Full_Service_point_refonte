@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,8 +10,9 @@ Route::get('/', function () {
 });
 
 // route pour lister les utilisateurs, accessible uniquement aux administrateurs
-Route::middleware(['auth', 'role:admin'])->group(function (){
-    Route::get('/utilisateurs', [UserController::class, 'index'])->name('utilisateurs.index');
+Route::middleware(['auth', 'role:admin'])->prefix('dashboard')->group(function (){
+    Route::get('/utilisateurs', [UserController::class, 'index'])->name('utilisateurs');
+    Route::resource('services', ServiceController::class);
 });
 
 // route pour accéder au tableau de bord, accessible aux administrateurs et aux éditeurs

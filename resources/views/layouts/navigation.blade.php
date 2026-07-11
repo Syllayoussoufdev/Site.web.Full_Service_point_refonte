@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('utilisateurs')" :active="request()->routeIs('utilisateurs')">
                             {{ __('Gestion Utilisateurs') }}
                         </x-nav-link>
+                    <x-nav-link :href="route('services.index')" :active="request()->routeIs('services.index')">
+                        {{ __('Gestion Services') }}
+                    </x-nav-link>
                     @endif
                 </div>
             </div>

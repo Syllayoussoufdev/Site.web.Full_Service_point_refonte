@@ -1,0 +1,6 @@
+$user = new \App\Models\User();
+$user->name = 'Admin';
+$user->email = 'admin@fullservicepoint.com';
+$user->password = Hash::make('Sly1209@');
+$user->role = 'admin';
+$user->save();

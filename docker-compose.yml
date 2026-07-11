@@ -9,7 +9,7 @@ services:
     networks:
       - laravel-network
     # Exécuter en tant qu'utilisateur courant pour éviter les problèmes de droits
-    user: "1000:1000" 
+    #user: "1000:1000" 
 
   mysql:
     image: mysql:8.0
