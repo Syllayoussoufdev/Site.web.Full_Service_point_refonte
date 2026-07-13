@@ -17,9 +17,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('dashboard')->group(function (
 
 // route pour accéder au tableau de bord, accessible aux administrateurs et aux éditeurs
 Route::middleware(['auth', 'role:admin,editeur'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('articles', ArticleController::class);
 });
 
 Route::middleware('auth')->group(function () {
