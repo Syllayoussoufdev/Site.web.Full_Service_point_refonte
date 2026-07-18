@@ -23,6 +23,9 @@
                         {{ __('Gestion Services') }}
                     </x-nav-link>
                     @endif
+                    <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
+                        {{ __('Gestion Articles') }}
+                    </x-nav-link>
                 </div>
             </div>
 
